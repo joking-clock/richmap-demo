@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<h1>Hi, {{ shop.shopname }}!</h1>
+	{% for post in posts %}
+		<div><p>{{ post.shop.shopname }} says: <b>{{ post.address }}</b></p></div>
+	{% endfor %}
 	<div id="map" style="height: 400px; width: 100%;"></div>
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
-	  <script async defer
+	 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
+    </script>
 {% endblock %}

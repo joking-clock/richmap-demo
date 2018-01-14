@@ -5,24 +5,25 @@ from app.forms import LoginForm
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'username': 'Richmap'}
+    owner = {'shopname': 'Richmap'}
     posts = [
         {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
+            'shop': {'shopname': 'Starbucks'},
+            'address': '3740 Midland Ave, Toronto, ON'
         },
         {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
+            'shop': {'shopname': 'Origination Noodle House'},
+            'address': '633 Silver Star Blvd, Scarborough, ON'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('index.html', title='Home', shop=owner, posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # form would be used in template
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
+        flash('Check-in information requested for shope {}, address={}'.format(
+            form.shopname.data, form.address.data))
         return redirect(url_for('index'))
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Check In', form=form)
