@@ -4,11 +4,6 @@
 <p>{{ address }}</p>
 <div id="map" style="height: 400px; width: 100%;"></div>
     <script>
-    var filepath = ""
-    function sendimg(file){
-    	filepath = file;
-    }
-
 	function initMap() {
 	  //var uluru = {lat: 43.821, lng: -79.298};
 	  var uluru = {{coordinate|tojson}};
@@ -33,7 +28,7 @@
 	    content: contentString
 	  });
 
-	  var image = filepath;
+	  var image = "static/img/bars.png";
 	  var marker = new google.maps.Marker({
 	    position: uluru,
 	    map: m,
@@ -45,7 +40,6 @@
 	  });
 	}
     </script>
-    <script>sendimg({{url_for('static', filename='img/bars.png')}});</script>
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
     </script>
