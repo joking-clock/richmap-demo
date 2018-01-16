@@ -1,6 +1,10 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, session, request
 from app import app
 from app.forms import LoginForm
+from app.map import MapService
+import googlemaps
+
+# gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')
 
 @app.route('/')
 @app.route('/index')
@@ -25,5 +29,11 @@ def login():
     if form.validate_on_submit():
         flash('Check-in information requested for shope {}, address={}'.format(
             form.shopname.data, form.address.data))
-        return redirect(url_for('index'))
+        # return redirect(url_for('index'))
+        # session['address']=form.address.data
+        # return redirect(url_for('map'))
+        map = MapService()
+        result = map.geocode(form.address.data)
+        coordinate = {'lat':result['lat'], 'lng':result['lng']}
+        return render_template('map.html', coordinate=coordinate)
     return render_template('login.html', title='Check In', form=form)
