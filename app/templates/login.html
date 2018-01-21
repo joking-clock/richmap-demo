@@ -18,6 +18,27 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{ form.shoppertype.label }}<br>
+            {{ form.shoppertype(size=32) }}<br>
+            {% for error in form.shoppertype.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>       
+        <p>
+            {{ form.coupon.label }}<br>
+            {{ form.coupon(size=32) }}<br>
+            {% for error in form.coupon.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.coupontype.label }}<br>
+            {{ form.coupontype(size=32) }}<br>
+            {% for error in form.coupontype.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}

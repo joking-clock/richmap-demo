@@ -7,7 +7,14 @@
 	function initMap() {
 	  //var uluru = {lat: 43.821, lng: -79.298};
 	  var uluru = {{coordinate|tojson}};
+	  var coupon = {{coupondata|tojson}};
+	  var couponTypeColor = {'gift':'yellow',
+	  	'discount':'red',
+	  	'free':'blue'
+		}
 	  console.log(uluru);
+	  console.log(coupon);
+
 	  var m = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 16,
 	    center: uluru
@@ -18,8 +25,7 @@
 	  '</div>'+
 	  '<h1 id="firstHeading" class="firstHeading">Original Noodles</h1>'+
 	  '<div id="bodyContent">'+
-	  '<p>Hi, it is me.</p>'+
-	  '<p>Coupon link, <a href="https://example.com?coupon=">'+
+	  '<p>Coupon link: <a href="https://example.com?coupon=">'+
 	  '(last visited June 22, 2009).</p>'+
 	  '</div>'+
 	  '</div>';
@@ -28,11 +34,21 @@
 	    content: contentString
 	  });
 
-	  var image = "static/img/bars.png";
+	  //var image = "static/img/bars.png";
 	  var marker = new google.maps.Marker({
 	    position: uluru,
 	    map: m,
-	    icon:image
+	    icon:{
+	  		url:"static/img/bars.png",
+	  		labelOrigin: new google.maps.Point(50,20)
+	  	},
+	    label: {
+		    text: coupon['cdata'],
+		    fontWeight: 'bold',
+		    fontSize: '14px',
+		    fontFamily: '"Courier New", Courier,Monospace',
+		    color: couponTypeColor[coupon['type']]
+      	}
 	  });
 
 	  marker.addListener('click', function() {

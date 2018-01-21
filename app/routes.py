@@ -35,5 +35,6 @@ def login():
         map = MapService()
         result = map.geocode(form.address.data)
         coordinate = {'lat':result['lat'], 'lng':result['lng']}
-        return render_template('map.html', coordinate=coordinate)
+        coupon = {'type':form.coupontype.data,'cdata':form.coupon.data}
+        return render_template('map.html', coordinate=coordinate, coupondata=coupon)
     return render_template('login.html', title='Check In', form=form)
