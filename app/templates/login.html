@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Sign In</h1>
-    <form action="" method="post">
+    <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
             {{ form.shopname.label }}<br>
@@ -39,6 +39,14 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.photo }}
+            {% for error in form.photo.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
     </form>
 {% endblock %}
