@@ -41,12 +41,15 @@ def login():
         result = map.geocode(form.address.data)
         coordinate = {'lat':result['lat'], 'lng':result['lng']}
         coupon = {'type':form.coupontype.data,'cdata':form.coupon.data}
-        return redirect(url_for('info', para1=coordinate, para2=coupon, para3=file_url))
+        session['coordinate'] = coordinate
+        session['coupon'] = coupon
+        session['file_url'] = file_url
+        return redirect(url_for('info'))
     return render_template('login.html', form=form)
 
 @app.route('/info', methods=['GET', 'POST'])
 def info():
-    coordinate = request.args['para1']
-    coupon = request.args['para2']
-    imgpath = request.args['para3']
+    coordinate = session.get('coordinate', None)
+    coupon = session['coupon']
+    imgpath = session.get('file_url')
     return render_template('map.html', coordinate=coordinate, coupondata=coupon, img=imgpath)
