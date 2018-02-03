@@ -1,63 +1,59 @@
-{% extends "base.html" %}
+<p>Map:</p>
+<div id="map-post" class="map_block">
+</div>
+<script>
+function initMap() {
+//var uluru = {lat: 43.821, lng: -79.298};
+var uluru = {{coordinate|tojson}};
+var coupon = {{coupondata|tojson}};
+var couponTypeColor = {'gift':'yellow',
+    'discount':'red',
+    'free':'blue'
+}
+console.log(uluru);
+console.log(coupon);
 
-{% block content %}
-<p><img src="{{img}}" alt="User Image"</p>
-<p>{{ address }}</p>
-<div id="map" style="height: 400px; width: 100%;"></div>
-    <script>
-	function initMap() {
-	  //var uluru = {lat: 43.821, lng: -79.298};
-	  var uluru = {{coordinate|tojson}};
-	  var coupon = {{coupondata|tojson}};
-	  var couponTypeColor = {'gift':'yellow',
-	  	'discount':'red',
-	  	'free':'blue'
-		}
-	  console.log(uluru);
-	  console.log(coupon);
+var m = new google.maps.Map(document.getElementsByClassName('map_block'), {
+zoom: 16,
+center: uluru
+});
 
-	  var m = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 16,
-	    center: uluru
-	  });
+var contentString = '<div id="content">'+
+'<div id="siteNotice">'+
+'</div>'+
+'<h1 id="firstHeading" class="firstHeading">Original Noodles</h1>'+
+'<div id="bodyContent">'+
+'<p>Coupon link: <a href="https://example.com?coupon=">'+
+'(last visited June 22, 2009).</p>'+
+'</div>'+
+'</div>';
 
-	  var contentString = '<div id="content">'+
-	  '<div id="siteNotice">'+
-	  '</div>'+
-	  '<h1 id="firstHeading" class="firstHeading">Original Noodles</h1>'+
-	  '<div id="bodyContent">'+
-	  '<p>Coupon link: <a href="https://example.com?coupon=">'+
-	  '(last visited June 22, 2009).</p>'+
-	  '</div>'+
-	  '</div>';
+var infowindow = new google.maps.InfoWindow({
+content: contentString
+});
 
-	  var infowindow = new google.maps.InfoWindow({
-	    content: contentString
-	  });
+//var image = "static/img/bars.png";
+var marker = new google.maps.Marker({
+position: uluru,
+map: m[0],
+icon:{
+        url:"static/img/bars.png",
+        labelOrigin: new google.maps.Point(50,20)
+    },
+label: {
+    text: coupon['cdata'],
+    fontWeight: 'bold',
+    fontSize: '14px',
+    fontFamily: '"Courier New", Courier,Monospace',
+    color: couponTypeColor[coupon['type']]
+    }
+});
 
-	  //var image = "static/img/bars.png";
-	  var marker = new google.maps.Marker({
-	    position: uluru,
-	    map: m,
-	    icon:{
-	  		url:"static/img/bars.png",
-	  		labelOrigin: new google.maps.Point(50,20)
-	  	},
-	    label: {
-		    text: coupon['cdata'],
-		    fontWeight: 'bold',
-		    fontSize: '14px',
-		    fontFamily: '"Courier New", Courier,Monospace',
-		    color: couponTypeColor[coupon['type']]
-      	}
-	  });
-
-	  marker.addListener('click', function() {
-	    infowindow.open(map, marker);
-	  });
-	}
-    </script>
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
-    </script>
-{% endblock %}
+marker.addListener('click', function() {
+infowindow.open(map, marker);
+});
+}
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
+</script>

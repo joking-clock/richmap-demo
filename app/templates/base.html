@@ -1,27 +1,41 @@
 <html>
     <head>
-        {% if title %}
-        <title>{{ title }} - Richmap</title>
-        {% else %}
         <title>Richmap</title>
-        {% endif %}
+
+        <style>
+        .top_bar {
+            height: 70px;
+            width: 100%;
+        }
+        .navigate_bar {
+            height: 90px;
+            width: 100%;
+        }
+        .map_block {
+            height: 480px;
+            width: 100%;
+        }
+        .deals_block {
+            height: 320px;
+            width: 100%;
+            display:flex;
+            justify-content: space-between;
+        }
+        .footer_bar {
+            height: 100px;
+            width: 100%;
+        }
+        </style>
     </head>
     <body>
-        <div>
-            Richmap:
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('login') }}">Login</a>
-        </div>
+        {% include ['top.html'] ignore missing %}
         <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
+        {% include ['navigatebar.html'] ignore missing %}
+        {% include ['map.html'] ignore missing %}
+        <hr>
+        {% include ['deals.html'] ignore missing %}
+        <hr>
+        {% include ['footer.html'] ignore missing %}
+        
     </body>
 </html>

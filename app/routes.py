@@ -2,6 +2,7 @@ import os
 from flask import render_template, flash, redirect, url_for, session, request
 from app import app
 from app.forms import LoginForm, photos
+from app.search import SearchForm
 from app.map import MapService
 import googlemaps
 from werkzeug import secure_filename
@@ -11,18 +12,15 @@ from werkzeug import secure_filename
 @app.route('/')
 @app.route('/index')
 def index():
-    owner = {'shopname': 'Richmap'}
-    posts = [
-        {
+    search = SearchForm()
+
+    posts = {
             'shop': {'shopname': 'Starbucks'},
-            'address': '3740 Midland Ave, Toronto, ON'
-        },
-        {
-            'shop': {'shopname': 'Origination Noodle House'},
-            'address': '633 Silver Star Blvd, Scarborough, ON'
+            'address': '3740 Midland Ave, Toronto, ON',
+            'coordinate': {'lat': 43.821, 'lng': -79.298}
         }
-    ]
-    return render_template('index.html', title='Home', shop=owner, posts=posts)
+    
+    return render_template('index.html', info=posts, search=search)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

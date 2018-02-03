@@ -1,40 +1,151 @@
-{% extends "base.html" %}
-
-{% block content %}
-	<h1>Hi, {{ shop.shopname }}!</h1>
-	{% for post in posts %}
-		<div><p>{{ post.shop.shopname }} says: <b>{{ post.address }}</b></p></div>
-	{% endfor %}
-	{% if title %}
-        <title>{{ title }} - Richmap</title>
-    {% else %}
+<html>
+    <head>
         <title>Richmap</title>
-    {% endif %}
-	<div id="map" style="height: 400px; width: 100%;"></div>
+
+        <style>
+        .top_bar {
+            height: 70px;
+            width: 100%;
+            display:flex;
+            overflow: hidden;
+            background-color: #e9e9e9;
+        }
+        .navigate_bar {
+            height: 90px;
+            width: 100%;
+        }
+        .map_block {
+            height: 480px;
+            width: 100%;
+        }
+        .deals_block {
+            height: 310px;
+            width: 100%;
+            display:flex;
+            justify-content: space-between;
+        }
+        .footer_bar {
+            height: 100px;
+            width: 100%;
+            display:flex;
+        }
+        .top_bar .logo {
+            /*height:45px;*/
+            padding:4px 12px;
+        }
+/*        .top_bar .search_form {
+            height:50px;
+        }*/
+        .top_bar input[type=text] {
+          padding: 6px;
+          margin-top: 8px;
+          font-size: 17px;
+          border: none;
+          -webkit-transition: width 0.4s ease-in-out;
+          transition: width 0.4s ease-in-out;
+        }
+
+        .top_bar input[type=text]:focus {
+          padding: 6px;
+          margin-top: 8px;
+          font-size: 17px;
+          border: none;
+          width:300px;
+        }
+        .top_bar .search_form button {
+          float: right;
+          padding: 6px 10px;
+          margin-top: 8px;
+          margin-right: 16px;
+          background: #ddd;
+          font-size: 17px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .top_links {
+            padding:14px 12px;
+            margin-left: auto;
+        }
+        .top_links ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /*background-color: #e9e9e9;*/
+        }
+
+        .top_links li {
+            float: left;
+        }
+
+        .top_links li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .top_links li a:hover {
+            background-color: #5F9EA0;
+        }
+
+        .navigate_bar ul {
+            display: flex ; /* Causes LI items to display in row. */
+            list-style-type: none ;
+            margin: auto ; /* Centers vertically / horizontally in flex container. */
+            padding: 0px 7px 0px 0px ;
+            justify-content: space-between;
+        }
+        .navigate_bar ul li{
+            height: 49px ;
+/*            margin: 0px 0px 0px 0px ;
+            padding: 0px 0px 0px 0px ;*/
+            /*position: relative ;*/
+            width: 65px ; /* Forces flex items to be smaller than their contents. */
+        }
+
+        .footer > ul {
+            list-style: none;
+            margin: auto ;
+            padding: 0px 7px 0px 0px ;
+            display: flex ;
+            justify-content: flex-start;
+        }
+        .footer > ul > li{
+            width:15%;
+            margin: 0 3%;
+        }
+        .footer > ul ul{
+            list-style-type: none ;
+            margin: 0;
+            padding: 8px 10px;
+            overflow: hidden;
+        }
+        </style>
+    </head>
+    <body>
+    {% include ['top.html'] ignore missing %}
+    <hr>
+    {% include ['navigatebar.html'] ignore missing %}
+	<!-- {% for post in posts %}
+		<div><p>{{ post.shop.shopname }} says: <b>{{ post.address }}</b></p></div>
+	{% endfor %} -->
+	<div id="map-pre" class="map_block" style="height: 400px; width: 100%;"></div>
+	<hr>
+    {% include ['deals.html'] ignore missing %}
+    <hr>
+    {% include ['footer.html'] ignore missing %}
     <script>
     	function initMap() {
-		  var uluru = {lat: 43.821, lng: -79.298};
-		  var m = new google.maps.Map(document.getElementById('map'), {
+		  var uluru = {{info.coordinate|tojson}};
+		  var m = new google.maps.Map(document.getElementById('map-pre'), {
 		    zoom: 16,
 		    center: uluru
 		  });
 
-		  var contentString = '<div id="content">'+
-		  '<div id="siteNotice">'+
-		  '</div>'+
-		  '<h1 id="firstHeading" class="firstHeading">Original Noodles</h1>'+
-		  '<div id="bodyContent">'+
-		  '<p>Hi, it is me.</p>'+
-		  '<p>Coupon link, <a href="https://example.com?coupon=">'+
-		  '(last visited June 22, 2009).</p>'+
-		  '</div>'+
-		  '</div>';
-
-		  var infowindow = new google.maps.InfoWindow({
-		    content: contentString
-		  });
-
-		  var image = 'bars.png';
+		  var image = 'static/img/bars.png';
 		  var marker = new google.maps.Marker({
 		    position: uluru,
 		    map: m,
@@ -49,4 +160,5 @@
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
     </script>
-{% endblock %}
+</body>
+</html>
