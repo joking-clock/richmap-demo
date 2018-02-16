@@ -1,5 +1,6 @@
 <div class="top_bar">
- 	<div class="logo"><p><img src="static/img/logo.png"></p></div>
+ 	<!-- <div class="logo"><p><img src="static/img/logo.png"></p></div> -->
+ 	<div class="logo"><p><img src="{{ url_for('static', filename='img/logo.png') }}"></p></div>
  	<div class="search_form">
  		<p>
  	<!-- reference: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_searchbar2 -->
@@ -12,7 +13,7 @@
 	</div>
 	<div class="top_links">
 			<ul>
-			  <li><a href="#home">Become a member</a></li>
+			  <li><a href="{{ url_for('register') }}">Become a member</a></li>
 			  <li><a href="#news">Sign in</a></li>
 			  <li><a href="#contact">Help</a></li>
 			</ul>

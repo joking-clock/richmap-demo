@@ -29,6 +29,8 @@
             width: 100%;
             display:flex;
         }
+
+        /* for top bar*/
         .top_bar .logo {
             /*height:45px;*/
             padding:4px 12px;
@@ -91,6 +93,7 @@
             background-color: #5F9EA0;
         }
 
+        /* for navigate block*/
         .navigate_bar ul {
             display: flex ; /* Causes LI items to display in row. */
             list-style-type: none ;
@@ -106,6 +109,7 @@
             width: 65px ; /* Forces flex items to be smaller than their contents. */
         }
 
+        /* for footer block*/
         .footer > ul {
             list-style: none;
             margin: auto ;
@@ -126,15 +130,15 @@
         </style>
     </head>
     <body>
-    {% include ['top.html'] ignore missing %}
+    {% include ['top-index.html'] ignore missing %}
     <hr>
-    {% include ['navigatebar.html'] ignore missing %}
+    {% include ['navigatebar-index.html'] ignore missing %}
 	<!-- {% for post in posts %}
 		<div><p>{{ post.shop.shopname }} says: <b>{{ post.address }}</b></p></div>
 	{% endfor %} -->
 	<div id="map-pre" class="map_block" style="height: 400px; width: 100%;"></div>
 	<hr>
-    {% include ['deals.html'] ignore missing %}
+    {% include ['deals-index.html'] ignore missing %}
     <hr>
     {% include ['footer.html'] ignore missing %}
     <script>
@@ -145,15 +149,35 @@
 		    center: uluru
 		  });
 
-		  var image = 'static/img/bars.png';
+		  var image = 'static/img/MoralVillage_marker.png';
 		  var marker = new google.maps.Marker({
 		    position: uluru,
 		    map: m,
 		    icon:image
 		  });
 
+         // var contentString = '<div class="infowindow">'+
+         //     '<div class="Infowindow_left">'+
+         //     '<img src="static/img/origination_infowindow.png">'+
+         //     '</div>'+
+         //     '<div class="Infowindow_right">'+
+         //     '<h3>Origination Noodle</h3>'+
+         //     '<p>$1 off</p>'+
+         //     '<p>For a $11.9 Cross Bridge Noodle</p>'+
+         //     '</div>'+
+         // '</div>';
+         var contentString = '<div class="infowindow">'+
+             '<a href="#">'+
+             '<img src="static/img/origination_infowindow.png">'+
+             '</a>'+
+         '</div>';
+
+          var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+
 		  marker.addListener('click', function() {
-		    infowindow.open(map, marker);
+		    infowindow.open(m, marker);
 		  });
 		}
     </script>

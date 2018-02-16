@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Richmap</title>
+        <meta charset="utf-8"> 
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+        .top_bar {
+            height: 70px;
+            width: 100%;
+            display:flex;
+            overflow: hidden;
+            justify-content: center;
+            background-color: #e9e9e9;
+        }
+        .register_toptitle {
+            padding:4px 0px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .top_links {
+            padding:14px 12px;
+            /*margin-left: auto;*/
+        }
+        .top_links ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /*background-color: #e9e9e9;*/
+        }
+        .top_links li {
+            float: left;
+        }
+        .top_links li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .top_links li a:hover {
+            background-color: #5F9EA0;
+        }
+        .footer_bar {
+            height: 100px;
+            width: 100%;
+        }
+        
+        /* for footer block*/
+        .footer > ul {
+            list-style: none;
+            margin: auto ;
+            padding: 0px 7px 0px 0px ;
+            display: flex ;
+            justify-content: flex-start;
+        }
+        .footer > ul > li{
+            width:15%;
+            margin: 0 3%;
+        }
+        .footer > ul ul{
+            list-style-type: none ;
+            margin: 0;
+            padding: 8px 10px;
+            overflow: hidden;
+        }
+        </style>
+    </head>
+    <body>
+    {% include ['top-register.html'] ignore missing %}
+    {% include ['body-register.html'] ignore missing %}
+    <hr>
+    {% include ['footer.html'] ignore missing %}
+    </body>
+</html>

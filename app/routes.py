@@ -22,8 +22,8 @@ def index():
     
     return render_template('index.html', info=posts, search=search)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     # form would be used in template
     form = LoginForm()
     if form.validate_on_submit():
@@ -43,7 +43,7 @@ def login():
         session['coupon'] = coupon
         session['file_url'] = file_url
         return redirect(url_for('info'))
-    return render_template('login.html', form=form)
+    return render_template('register.html', form=form)
 
 @app.route('/info', methods=['GET', 'POST'])
 def info():
@@ -51,3 +51,7 @@ def info():
     coupon = session['coupon']
     imgpath = session.get('file_url')
     return render_template('map.html', coordinate=coordinate, coupondata=coupon, img=imgpath)
+
+@app.route('/addAddress', methods=['GET', 'POST'])
+def addAddress():
+    return render_template('addAddress.html')
