@@ -7,18 +7,31 @@
         <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
-        .top_bar {
-            height: 70px;
-            width: 100%;
-            display:flex;
-            overflow: hidden;
-            justify-content: center;
+        .top_bar{
             background-color: #e9e9e9;
+        }
+        .logo-register {
+            transform: translateX(-50%);
+            left: 50%;
+            position: absolute;
         }
         .register_toptitle {
             padding:4px 0px;
             margin-right: auto;
             margin-left: auto;
+        }
+        .header-in-row {
+          padding:0 0 0 15px;
+        }
+        .footer_bar {
+            height: 100px;
+            width: 100%;
+        }
+        .footer-col-1 {
+          list-style: none;
+          margin: 0;
+          padding: 0 0 0 20px;
+          overflow: hidden;
         }
         .top_links {
             padding:14px 12px;
@@ -71,8 +84,10 @@
     </head>
     <body>
     {% include ['top-register.html'] ignore missing %}
+    <div class="container">
     {% include ['body-addAddress.html'] ignore missing %}
     <hr>
     {% include ['footer.html'] ignore missing %}
+    </div>
     </body>
 </html>

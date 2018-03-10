@@ -24,8 +24,9 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    return render_template('register.html')
     # form would be used in template
-    form = LoginForm()
+'''    form = LoginForm()
     if form.validate_on_submit():
         # flash('Check-in information requested for shope {}, address={}'.format(
         #    form.shopname.data, form.address.data))
@@ -43,7 +44,7 @@ def register():
         session['coupon'] = coupon
         session['file_url'] = file_url
         return redirect(url_for('info'))
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form)'''
 
 @app.route('/info', methods=['GET', 'POST'])
 def info():

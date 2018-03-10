@@ -2,9 +2,7 @@
     <head>
         <title>Richmap</title>
         <meta charset="utf-8"> 
-        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
-        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
         <style>
         .top_bar {
 /*            height: 70px;
@@ -13,9 +11,8 @@
             overflow: hidden;*/
             background-color: #e9e9e9;
         }
-        .navigate_bar {
-            height: 90px;
-            width: 100%;
+        .navigate_bar{     
+            padding: 0px 0px 8px 0px ;
         }
         .map_block {
             height: 480px;
@@ -32,15 +29,26 @@
             width: 100%;
             display:flex;
         }
-
+        .header-in-row {
+          padding:0 0 0 15px;
+        }
+        .infowindow {
+          height: 160px;
+          width: 470px;
+        }
+/*        .infowindow-left {
+          height: 126px;
+          width: 176px;
+        }
+        .infowindow-right {
+          height: 130px;
+          width: 260px;
+        }*/
         /* for top bar*/
         .top_bar .logo {
             /*height:45px;*/
             padding:4px 12px;
         }
-/*        .top_bar .search_form {
-            height:50px;
-        }*/
         .top_bar input[type=text] {
           padding: 6px;
           margin-top: 8px;
@@ -95,15 +103,13 @@
         .top_links li a:hover {
             background-color: #5F9EA0;
         }
-
-        /* for navigate block*/
-        .navigate_bar ul {
-            display: flex ; /* Causes LI items to display in row. */
+        /*.navigate_bar ul{
+            display: flex ; Causes LI items to display in row. 
             list-style-type: none ;
-            margin: auto ; /* Centers vertically / horizontally in flex container. */
-            padding: 0px 7px 0px 0px ;
+            margin: auto ; Centers vertically / horizontally in flex container. 
+            padding: 0px 0px 3px 0px ;
             justify-content: space-between;
-        }
+        }*/
         .navigate_bar ul li{
             height: 49px ;
 /*            margin: 0px 0px 0px 0px ;
@@ -130,20 +136,27 @@
             padding: 8px 10px;
             overflow: hidden;
         }
+        .footer-col-1 {
+          list-style: none;
+          margin: 0;
+          padding: 0 0 0 20px;
+          overflow: hidden;
+        }
         </style>
     </head>
     <body>
     {% include ['top-index.html'] ignore missing %}
-    <hr>
+
+    <div class="container">
     {% include ['navigatebar-index.html'] ignore missing %}
 	<!-- {% for post in posts %}
 		<div><p>{{ post.shop.shopname }} says: <b>{{ post.address }}</b></p></div>
 	{% endfor %} -->
-	<div id="map-pre" class="map_block" style="height: 400px; width: 100%;"></div>
-	<hr>
-    {% include ['deals-index.html'] ignore missing %}
+  	<div id="map-pre" class="map_block" style="height: 400px; width: 100%;"></div>
+      {% include ['deals-index.html'] ignore missing %}
     <hr>
-    {% include ['footer.html'] ignore missing %}
+      {% include ['footer.html'] ignore missing %}
+    </div>
     <script>
     	function initMap() {
 		  var uluru = {{info.coordinate|tojson}};
@@ -159,32 +172,37 @@
 		    icon:image
 		  });
 
-         // var contentString = '<div class="infowindow">'+
-         //     '<div class="Infowindow_left">'+
-         //     '<img src="static/img/origination_infowindow.png">'+
-         //     '</div>'+
-         //     '<div class="Infowindow_right">'+
-         //     '<h3>Origination Noodle</h3>'+
-         //     '<p>$1 off</p>'+
-         //     '<p>For a $11.9 Cross Bridge Noodle</p>'+
-         //     '</div>'+
-         // '</div>';
-         var contentString = '<div class="infowindow">'+
-             '<a href="#">'+
-             '<img src="static/img/origination_infowindow.png">'+
-             '</a>'+
-         '</div>';
+      var contentString = "<div class='d-flex infowindow'>"
+          +"<div class='infowindow-left'>"
+          +"<img class='rounded' src=\" {{ url_for('static', filename='img/coupon/Noodles-small.png') }} \">"
+          +"<p>Origination Noodle</p>"
+          +"</div>"
 
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
+          +"<div class='infowindow-right'>"
+          +"<p>Origination Noodle</p>"
+          +"<p>$1 Off</p>"
+          +"<p>For a $11.9 Cross Bridge Noodle</p>"
+          +"<p>"
+          +  "<img src=\" {{ url_for('static', filename='img/coupon/Shop-icon.png') }} \">"
+          +  "<img src=\" {{ url_for('static', filename='img/coupon/Star-4.5.png') }} \">"
+          +  "<a ><img src=\" {{ url_for('static', filename='img/coupon/Collect-icon.png') }} \"></a>"
+          +"</p>"
+          +"</div>"
+          +"</div>";
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
 
 		  marker.addListener('click', function() {
 		    infowindow.open(m, marker);
 		  });
 		}
     </script>
-	<script async defer
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+	  <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI&callback=initMap">
     </script>
 </body>
