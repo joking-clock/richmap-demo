@@ -6,6 +6,7 @@ from app.search import SearchForm
 from app.map import MapService
 import googlemaps
 from werkzeug import secure_filename
+from datetime import datetime
 
 # gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')
 
@@ -56,3 +57,7 @@ def info():
 @app.route('/addAddress', methods=['GET', 'POST'])
 def addAddress():
     return render_template('addAddress.html')
+
+@app.route('/couponpage', methods=['GET', 'POST'])
+def couponpage():
+    return render_template('couponpage.html')
