@@ -23,7 +23,7 @@ class RetailerAddress(db.Model):
     address = db.Column(db.String(120))
     city = db.Column(db.Text)
     contactNumber = db.Column(db.String(32))
-    # coupons = db.relationship('Coupon', backref='shopper_address', lazy='dynamic')
+    coupons = db.relationship('Coupon', backref='shopper_address', lazy='dynamic')
     __tablename__ = "retailer_address"
 
     def __repr__(self):
@@ -32,8 +32,8 @@ class RetailerAddress(db.Model):
 
 class Coupon(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    retailerID = db.Column('retailer_id', db.Integer, db.ForeignKey('retailer.id'))
-    # addressID = db.Column('address_id', db.Integer, db.ForeignKey('retailer_address.id'))
+    retailerID = db.Column(db.Integer, db.ForeignKey('retailer.id'))
+    addressID = db.Column(db.Integer, db.ForeignKey('retailer_address.id'))
     couponTitle = db.Column(db.String(64))
     currentPrice = db.Column(db.Float)
     discountType = db.Column(db.String(32))
