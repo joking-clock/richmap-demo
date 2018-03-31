@@ -1,8 +1,9 @@
 from datetime import datetime
-from app import db
+from app import db, login
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-
-class Retailer(db.Model):
+class Retailer(db.Model, UserMixin):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -16,6 +17,11 @@ class Retailer(db.Model):
     def __repr__(self):
         return '<Retailer {}>'.format(self.name)
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 class RetailerAddress(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
@@ -43,9 +49,13 @@ class Coupon(db.Model):
     createTime = db.Column(db.DateTime, default=datetime.utcnow)
     # whenExpire = db.Column(db.DateTime, default=datetime.utcnow)
     # couponTTL = db.Column(db.Integer)
-    # comment = db.Column(db.Text)
+    comment = db.Column(db.Text)
     # addresslist = db.relationship('RetailerAddress', backref='coupon', lazy='dynamic')
     __tablename__ = "coupon"
 
     def __repr__(self):
         return '<Coupon {}>'.format(self.couponTitle)
+
+@login.user_loader
+def load_retailer(id):
+    return Retailer.query.get(int(id))

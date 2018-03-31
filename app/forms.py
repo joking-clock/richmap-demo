@@ -10,10 +10,14 @@ photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
 class LoginForm(FlaskForm):
-    shopname = StringField('shopname', validators=[DataRequired()])
-    address = StringField('address', validators=[DataRequired()])
-    shoppertype = StringField('mechant type', validators=[DataRequired()])
+    name = StringField('name', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Sign In')
+
+class RegisterForm():
+    # shoppertype = StringField('mechant type', validators=[DataRequired()])
     coupon = StringField('coupon', validators=[DataRequired()])
-    coupontype = StringField('coupontype', validators=[DataRequired()])
-    submit = SubmitField('Check in')
-    photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
+    # coupontype = StringField('coupontype', validators=[DataRequired()])
+    # submit = SubmitField('Check in')
+    # photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])

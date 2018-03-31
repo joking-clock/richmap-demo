@@ -7,22 +7,48 @@ from app.map import MapService
 import googlemaps
 from werkzeug import secure_filename
 from datetime import datetime
+from flask_login import current_user, login_user
+from app.models import Retailer, RetailerAddress, Coupon
 
 # gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')
 
-@app.route('/')
 @app.route('/index')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('login'))
     search = SearchForm()
 
-    posts = {
-            'shop': {'shopname': 'Starbucks'},
-            'address': '3740 Midland Ave, Toronto, ON',
-            'coordinate': {'lat': 43.821, 'lng': -79.298}
-        }
+
     
     return render_template('index.html', info=posts, search=search)
 
+@app.route('/')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form_login = LoginForm()
+    if form_login.validate_on_submit():
+        retailer = Retailer.query.filter_by(name=form_login.name.data).first()
+        if retailer is None or not retailer.check_password(form_login.password.data):
+        # if retailer is None or not retailer.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(retailer, remember=form_login.remember_me.data)
+        return redirect(url_for('index'))
+
+    location_default = {
+        'shop': {'shopname': 'Starbucks'},
+        'address': '3740 Midland Ave, Toronto, ON',
+        'coordinate': {'lat': 43.821, 'lng': -79.298}
+    }
+
+    # form_login on the left of equal sign is the name in template, the "form_login" on the right side is form_login = LoginForm
+    return render_template('index.html', info_default=location_default, form_login = form_login)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+    
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     return render_template('register.html')

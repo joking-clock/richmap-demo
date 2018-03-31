@@ -9,9 +9,53 @@
 	</form>
 
 		<ul class="navbar-nav ml-auto">
+			{% if current_user.is_anonymous %}
 			<li class="nav-item active"><a class="nav-link" href="{{ url_for('register') }}">Become a merchant</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Sign in</a></li>
+			<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">Sign in</a></li>
+			{% else %}
+			<li class="nav-item">{{current_user.username}}</li>
+			{% endif%}
+
 			<li class="nav-item"><a class="nav-link" href="#">Help</a></li>
 		</ul>
 	</div>
+
 </nav>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+	<div class="modal-content">
+
+	  <!-- Modal Header -->
+	  <div class="modal-header">
+		<h4 class="modal-title">Please log in</h4>
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+
+	  <!-- Modal body -->
+		<form role="form" class="pt-3" name="index_form" value="login_data">
+		  <div class="modal-body">
+				<div class="form-group row">
+					<label for="username_login" class="col-lg-3 control-label">User Name</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="userName_login" placeholder="User name..." />
+					</div>
+				</div><!-- .form-group -->
+				<div class="form-group row">
+					<label for="password_login" class="col-lg-3 control-label">Password</label>
+					<div class="input-group col-lg-8">
+						<input type="password" class="form-control" id="userPassword_login" placeholder="Password">
+					</div>
+				</div><!-- .form-group -->
+		  </div>
+
+		  <!-- Modal footer -->
+		  <div class="modal-footer">
+			  <button type="button" class="btn btn-primary">Login</button>
+			  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+		  </div>
+		</form>
+	</div>
+  </div>
+</div>

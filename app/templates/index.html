@@ -67,7 +67,7 @@
     </div>
     <script>
     	function initMap() {
-		  var uluru = {{info.coordinate|tojson}};
+		  var uluru = {{info_default.coordinate|tojson}};
 		  var m = new google.maps.Map(document.getElementById('map-pre'), {
 		    zoom: 16,
 		    center: uluru
