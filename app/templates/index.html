@@ -14,6 +14,9 @@
         .navigate_bar{     
             padding: 5px 0px 5px 0px ;
         }
+        .username_headline {
+            font-family: 'Rammetto One', cursive;
+        }
         .map_block {
             height: 480px;
             width: 100%;
@@ -67,20 +70,16 @@
     </div>
     <script>
     	function initMap() {
-		  var uluru = {{info_default.coordinate|tojson}};
-		  var m = new google.maps.Map(document.getElementById('map-pre'), {
-		    zoom: 16,
-		    center: uluru
-		  });
+    		  var locations = {{coordinate_default|tojson|safe}};
+          console.log(locations)
+    		  var m = new google.maps.Map(document.getElementById('map-pre'), {
+    		    zoom: 10,
+    		    center: new google.maps.LatLng(43.821, -79.298)
+    		  });
 
-		  var image = 'static/img/MoralVillage_marker.png';
-		  var marker = new google.maps.Marker({
-		    position: uluru,
-		    map: m,
-		    icon:image
-		  });
+          var infowindow = new google.maps.InfoWindow();
 
-      var contentString = "<div class='d-flex infowindow'>"
+          var contentString = "<div class='d-flex infowindow'>"
           +"<div class='infowindow-left mr-4'>"
           +"<img class='rounded' src=\" {{ url_for('static', filename='img/coupon/Noodles-small.png') }} \">"
           +"</div>"
@@ -97,14 +96,32 @@
           +"</div>"
           +"</div>";
 
-      var infowindow = new google.maps.InfoWindow({
-        content: contentString
-      });
+		  var image = 'static/img/MoralVillage_marker.png';
+		  var marker;
+        // console.log(locations.length)
+        for (i = 0; i < locations.length; i++) {
+            var position = new google.maps.LatLng(locations[i][1], locations[i][2]);
 
-		  marker.addListener('click', function() {
-		    infowindow.open(m, marker);
-		  });
-		}
+            //bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: m,
+                icon:image
+            });
+
+            infowindow.setContent(contentString);
+
+            marker.addListener('click', function(){
+              infowindow.open(map, marker);
+            });
+            // google.maps.event.addListener(marker, 'click', (function(marker) {
+            //     return function() {
+            //       infowindow.setContent(contentString);
+            //       infowindow.open(m, marker);
+            //     }
+            // })(marker));
+        }
+      }
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
