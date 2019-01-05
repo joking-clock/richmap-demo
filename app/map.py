@@ -2,10 +2,10 @@ import googlemaps
 
 class MapService:
 	'''def __init__(self):
-		self.gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')'''
+		self.gmaps = googlemaps.Client(key='api key')'''
 
 	def geocode(self, address):
-		gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')
+		gmaps = googlemaps.Client(key='api key')	# input Google Map API key
 		geocode_result = gmaps.geocode(address)
 		return geocode_result[0]['geometry']['location']
 

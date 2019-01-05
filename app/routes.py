@@ -11,7 +11,7 @@ from flask_login import current_user, login_user, logout_user
 from app.models import Retailer, RetailerAddress, Coupon
 import sys
 
-# gmaps = googlemaps.Client(key='AIzaSyCts7em4L-ni5Lrc1goEXae-uqyVwtIcxI')
+# gmaps = googlemaps.Client(key='api key')
 
 # @app.route('/index')
 # def index():
